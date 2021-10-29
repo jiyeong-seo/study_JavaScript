@@ -9,3 +9,6 @@ for (let i = 9; i >= 0; i--) {
 console.groupEnd();
 
 // 큰수부터 출력해라 -> 반복을 거꾸로 돌려라
+
+
+
