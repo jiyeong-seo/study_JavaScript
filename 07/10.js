@@ -17,7 +17,7 @@ console.log(user&&user.address&user.address.city);
 //반드시 존재해야하는 개체에는 if문으로 존재 여부를 검사하는 유효성 검사를 수행하는 것이 좋다
 console.log(user?.address?.city);
 
-console.log(:프로그램 종료~!!)
+console.log(":프로그램 종료~!!");
 
 
 

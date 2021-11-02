@@ -13,4 +13,4 @@ console.log(company.name);
 console.log(company["since"]);
 console.log(company.department[0]);
 console.log(company.department[1]);
-consoel.log(company["department"][2]);
+console.log(company["department"][2]);
