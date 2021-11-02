@@ -1,18 +1,14 @@
+/**## 문제2.
+다음의 JSON은 어느 학급의 중간고사 성적을 나타낸다.
+
 const exam = {
     "철수": [89, 82, 79, 91],
     "민영": [91, 95, 94, 89],
     "남철": [65, 57, 71, 64],
     "혜진": [82, 76, 81, 83]
-};
-
-let sum = 0;
-for(let i =0;i<4;i++){
-
-console.log(Object.keys(exam)[i])
-  console.log(sum)
-  for(let j=0;j<4;j++){ 
-      sum += exam[Object.keys(exam)[i]][i]
-   
 }
- console.log(exam[Object.keys(exam)[i]][i])
-};
+
+### 2-1.
+위 데이터에서 학생별 총점과 평균을 구하시오.
+  */
+
