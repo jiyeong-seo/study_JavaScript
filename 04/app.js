@@ -19,7 +19,7 @@ if (국어 === "A") {
   console.log("B학점 입니다.");
 } else {
   console.log("C학점 미만 입니다.");
-}ㅋ
+}
 console.groupEnd();
 // ===============================================
 console.group("3번 문제");
@@ -63,8 +63,6 @@ while (a < 10) {
 console.log("총 합 : %d", y);
 console.groupEnd();
 // ===============================================
-console.group("6번 문제");
-
 console.group("6번 문제");
 let z = 1;
 let b = 0;
