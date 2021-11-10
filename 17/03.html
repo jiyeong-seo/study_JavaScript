@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- data-* 속성 사용 -->
+    <button type="button" class="mybtn" data-name="javascript" data-age="20">
+      JavaScript;20
+    </button>
+    <button type="button" class="mybtn" data-name="vanilla" data-age="15">
+      vanilla;15
+    </button>
+    <h1 id="console"></h1>
+    <script>
+      /**
+       * HTML5부터는 모든 HTML 태그 안에 data-* 형식의 속성을 개발자가 필요한 경우 임의로 정의할 수 있다.
+       * 이 속성을 사용하여 HTML태그 안에 JS에서 활용할 수 있는 정보를 포함시킬 수 있다.
+       * 이 속성들은 JavaScript로 가져온 HTML요소 객체의 dataset 프로퍼티의 하위속성에 포함된다.
+       **/
+      const mybtn = document.querySelectorAll(".mybtn");
+
+      for (let btn of mybtn) {
+        btn.addEventListener("click", (e) => {
+          //html태그에 존재하지 않는 속성을 js로 추가하는 것은 가능하다.
+          e.currentTarget.dataset.helloworld = "안녕하세요";
+          const name = e.currentTarget.dataset.name;
+          const age = e.currentTarget.dataset.age;
+          document.getElementById("console").innerHTML =
+            "이름 : " + name + " , 나이 : " + age;
+
+          //HTML태그에 없는 속성을 출력하거나 다른 변수에 복사하는 경우 undefinde
+          console.log(e.currentTarget.dataset.test);
+        });
+      }
+    </script>
+  </body>
+</html>

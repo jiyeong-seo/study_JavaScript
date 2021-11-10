@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .pull-left {
+        float: left;
+      }
+      .clearfix::after {
+        float: none;
+        clear: both;
+        content: "";
+        display: block;
+      }
+      .img-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 640px;
+        margin: auto;
+      }
+      .img-list li {
+        width: 20%;
+      }
+      .img-list li a {
+        display: block;
+        margin: 10px;
+      }
+      .img-list li img {
+        width: 100%;
+      }
+      .viewer {
+        width: 620px;
+        margin: auto;
+        padding: 0 10;
+      }
+      .viewer img {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="img-list clear-fix">
+      <li class="pull-left">
+        <a href="img/yuliia-tretynychenko-0-VQ8dnfFWI-unsplash.jpg" class="link"
+          ><img src="img/yuliia-tretynychenko-0-VQ8dnfFWI-unsplash.jpg"
+        /></a>
+      </li>
+      <li class="pull-left">
+        <a href="img/yuliia-tretynychenko-07ZMN0PqNik-unsplash.jpg" class="link"
+          ><img src="img/yuliia-tretynychenko-07ZMN0PqNik-unsplash.jpg"
+        /></a>
+      </li>
+      <li class="pull-left">
+        <a href="img/yuliia-tretynychenko-daMJU1v-JbU-unsplash.jpg" class="link"
+          ><img src="img/yuliia-tretynychenko-daMJU1v-JbU-unsplash.jpg"
+        /></a>
+      </li>
+      <li class="pull-left">
+        <a href="img/yuliia-tretynychenko-IA2to0Kh7jk-unsplash.jpg" class="link"
+          ><img src="img/yuliia-tretynychenko-IA2to0Kh7jk-unsplash.jpg"
+        /></a>
+      </li>
+      <li class="pull-left">
+        <a href="img/yuliia-tretynychenko-S-rYIQ8UwPA-unsplash.jpg" class="link"
+          ><img src="img/yuliia-tretynychenko-S-rYIQ8UwPA-unsplash.jpg"
+        /></a>
+      </li>
+    </ul>
+
+    <div class="viewer">
+      <img
+        src="img/yuliia-tretynychenko-0-VQ8dnfFWI-unsplash.jpg"
+        id="target"
+      />
+
+      <script>
+        const linkList = document.querySelectorAll(".link");
+
+        for (const item of linkList) {
+          item.addEventListener("click", (e) => {
+            //링크에 대한 클릭 이벤트 발생 후 href 속성이 동작하게 된다.
+            //아래 구문은 링크에 대한 클릭 이벤트 동작 후,
+            //href 속성이 동작하는 것을 방지한다.(기본 속성이 동작하는 것을 막는다)
+            e.preventDefault();
+
+            //클릭된 링크가 갖는 속성값 가져오기
+            //-> 링크가 가르키는 원본 이미지의 주소
+            const src = e.currentTarget.getAttribute("href");
+            console.log(src);
+
+            const target = document.querySelector("#target"); // 메인이미지
+            target.setAttribute("src", src);
+          });
+        }
+      </script>
+    </div>
+  </body>
+</html>
