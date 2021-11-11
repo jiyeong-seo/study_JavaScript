@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-</body>
+    <style>
+      #bannerLink {
+        width: 300px;
+        margin: 0 auto;
+        display: block;
+      }
+      #bannerImg {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#" id="bannerLink">
+      <img src="../1/img/1.png" id="bannerImg" />
+    </a>
+
+    <script>
+      const url = document.getElementById("bannerLink");
+      const img = document.getElementById("bannerImg");
+      for (i = 0; i < 3; i++) {
+        setTimeout(() => {
+          // url.setAttribute("href");
+          img.setAttribute("src", "../1/img/" + [i] + ".png");
+        }, 3000);
+      }
+    </script>
+  </body>
 </html>

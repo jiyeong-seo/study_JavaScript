@@ -1,41 +1,27 @@
-/**
- * setInterval(func, int)
+/** 선생님은 09라고 적으심(실수로 그러신듯?)
  *
- * interval은 간격을 의미한다
+ * setTimeout(func,int)
  *
- * 첫번째 인자로 전달된 콜백함수를 두번째 인자로 전달된 시간마다 한 번씩 호출한다.(타이머기능)
+ * 첫번째 인자로 입력된 콜백함수를 두번째 인자로 입력된 시간 후에 실행하도록 예약한다.(딜레이 기능)
  *
- * 타이머를 종료시킬 수 있는 timerid를 반환한다.
- *
- * 이 값을 clearInterval() 함수에 전달하면 타이머가 종료된다.
- *
- * int는 밀리세컨드(1/1000)초를 의미하는 정수
+ * 두번째 인자로 입력된 int는 밀리세컨드(1/1000)초를 의미하는 정수
  */
 
-let count1 = 0;
-
-let timerId1 = setInterval(() => {
-  count1++;
-  console.log("[타이머1] " + count1 + "번째 자동실행");
-
-  if (count1 == 5) {
-    console.log("타이머1 종료");
-    clearInterval(timerId1);
+function foo() {
+  for (let i = 1; i < 10; i++) {
+    console.log("2 x " + i + " = " + i * 2);
   }
-}, 3000);
+}
 
-console.log("타이머1시작");
+setTimeout(foo, 3000);
+console.log("구구단을 외자!");
 
-let count2 = 0;
+//일반적으로 콜백함수를 별도로 정의하지 않고 즉시 전달한다.
+//setTimeout(function(){},int);
 
-let timerId2 = setInterval(() => {
-  count2++;
-  console.log("[타이머2] " + count2 + "번째 자동실행");
-
-  if (count2 == 10) {
-    console.log("타이머2 종료");
-    clearInterval(timerId2);
+setTimeout(() => {
+  for (let i = 1; i < 10; i++) {
+    console.log("3 x " + i + " = " + i * 3);
   }
-}, 1000);
-
-console.log("타이머2 시작");
+}, 1500);
+console.log("프로그램 종료~!!!");
