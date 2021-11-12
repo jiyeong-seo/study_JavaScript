@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="myfrom">
+      <label><input type="checkbox" value="soccor" class="hobby" />축구</label>
+      <label
+        ><input type="checkbox" value="basketball" class="hobby" />농구</label
+      >
+      <label
+        ><input type="checkbox" value="baseball" class="hobby" />야구</label
+      >
+      <button type="submit">입력값 확인</button>
+    </form>
+
+    <p id="console"></p>
+
+    <script>
+      const checkbox = document.querySelectorAll(".hobby");
+
+      //선택 항목이 변경되었을 경우의 이벤트 처리
+      for (let i = 0; i < checkbox.length; i++) {
+        checkbox[i].addEventListener("change", (e) => {
+          document.querySelector("#console").innerHTML = e.currentTarget.value;
+        });
+      }
+
+      //전송 버튼이 눌러진 경우의 처리
+      document.querySelector("#myform").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // 선택된 항목의 value를 저장할 빈 배열
+        const checkedItem = [];
+
+        for (let i = 0; i < checkbox.length; i++) {
+          if (checkbox[i].checked) {
+            checkedItem.push(checkbox[i].value);
+          }
+        }
+        document.querySelector("#console").innerHTML = checkedItem;
+      });
+    </script>
+  </body>
+</html>
