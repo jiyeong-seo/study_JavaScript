@@ -1,0 +1,40 @@
+<!-- 이미지 크기 변경 -->
+<!-- 각 버튼을 클릭하여 img태그의 width,height를 변경해 보세요. -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button type="button" class="sizeBtn" data-size="320x240">320x240</button>
+    <button type="button" class="sizeBtn" data-size="640x480">640x480</button>
+    <button type="button" class="sizeBtn" data-size="800x600">800x600</button>
+
+    <img src="../1/img/1.png" id="img" />
+
+    <script>
+      const sizeBtnList = document.querySelectorAll(".sizeBtn");
+
+      for (const sizeBtn of sizeBtnList) {
+        sizeBtn.addEventListener("click", (e) => {
+          const size = e.currentTarget.dataset.size;
+          console.log(size);
+
+          const p = size.indexOf("x");
+          const width = size.substring(0, p);
+          const height = size.substring(p + 1);
+
+          const img = document.querySelector("#img");
+          //img.setAttribute("width",width);
+          //img.setAttribute("height",height);
+          img.style.width = width + "px";
+          img.style.height = height + "px";
+        });
+      }
+    </script>
+  </body>
+</html>

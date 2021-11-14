@@ -1,0 +1,40 @@
+<!-- 별찍기 두번째 문제 -->
+<!-- 아래와 같이 버튼이 존재할 때 각 버튼을 클릭하여 별찍기의 행 수가 변경되도록 구현해 보세요. -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button type="button" class="starBtn" data-line="5">5행</button>
+    <button type="button" class="starBtn" data-line="10">10행</button>
+    <button type="button" class="starBtn" data-line="15">15행</button>
+
+    <h2 id="printArea"></h2>
+
+    <script>
+      const btnList = document.querySelectorAll(".starBtn");
+      const printArea = document.querySelector("#printArea");
+
+      for(const btn of btnList){
+          btn.addEventListener("click", e => {
+              const line = parseInt(e.currentTarget.dataset.line);
+
+              let star ="";
+
+              for(let i = 0; i < line; i++) {
+                  for(let j = 0; j < i+1; j++) {
+                      star +="*";
+                  }
+                  star += "<br/>";
+              }
+              printArea.innerHTML =star;
+          })
+      }
+    </script>
+  </body>
+</html>

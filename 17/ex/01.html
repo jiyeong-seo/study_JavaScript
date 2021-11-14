@@ -1,0 +1,43 @@
+<!-- HTML제어하기 연습문제 -->
+<!-- 3초에 한번씩 이 베너의 이미지와 링크의 URL이 변경되는 롤링베너를 구현하시오. -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a href="#" id="bannerLink"
+      ><img src="../1/img/1.png" id="bannerImg" width="200"
+    /></a>
+
+    <script>
+      //출력할 이미지 경로들
+      const imgList = ["../1/img/1.png", "../1/img/2.png", "../1/img/3.png"];
+      const urlList = [
+        "http://www.naver.com",
+        "http://www.naver.com",
+        "http://www.naver.com",
+      ];
+
+      //현재 출력하고 있는 이미지의 인덱스
+      let currentIndex = 0;
+
+      setInterval(() => {
+        document
+          .querySelector("#bannerImg")
+          .setAttribute("src", imgList[currentIndex]);
+        document
+          .querySelector("#bannerLink")
+          .setAttribute("href", urlList[currentIndex]);
+        //currentIndex++;
+        //if(currentIndex >= imgList.length){
+        // currentIndex = 0;
+        // }
+        currentIndex = (currentIndex + 1) % imgList.length;
+      },3000);
+    </script>
+  </body>
+</html>
