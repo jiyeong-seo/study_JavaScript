@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>flatpickr - 달력 플랫폼</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  </head>
+  <body>
+    <h1>flatpickr.js Example</h1>
+    <p>
+      <a href="https://flatpickr.js.org/">https://flatpickr.js.org/</a>
+    </p>
+    <div>
+      <code>npm i flatpickr --save</code>
+    </div>
+    <hr />
+
+    <p>첫번째 방법</p>
+    <input id="date" placeholder="날짜를 선택해주세요1" />
+
+    <p>두번째 방법</p>
+    <input id="calender" placeholder="날짜를 선택해주세요2" />
+
+    <script>
+      // 첫번째 방법 - Input객체를 참조하는 변수.flatpicker
+      let date = document.querySelector("#date");
+      date.flatpickr();
+
+      /* 제어 -> flatpickr({ })*/
+      //선택 날짜 연결
+      date = document.querySelector("#date");
+      date.flatpickr({
+        mode: "multiple", // 다중 선택
+        dateFormat: "y-M-d", // 선택 형식
+        conjunction: "~", // ~ 아닌 다른 문자로 연결 가능
+      });
+
+      // 두번째 방법 - flatpickr("선택자");
+      flatpickr("#calender");
+
+      /* 제어 -> flatpickr("선택자",{ })*/
+      //선택 날짜 연결
+      flatpickr("#calender", {
+        mode: "multiple", // 다중 선택
+        dateFormat: "y-M-d", // 선택 형식
+        conjunction: "~", // ~ 아닌 다른 문자로 연결 가능
+      });
+    </script>
+  </body>
+</html>
