@@ -93,10 +93,6 @@ label {
   font-weight: 700;
   display: block;
 }
-#input input,
-#input select {
-  outline: none;
-}
 
 #input {
   display: block;
@@ -123,7 +119,6 @@ label {
   height: 29px;
   font-size: 15px;
   line-height: 18px;
-  color: #000;
   border: none;
 }
 
@@ -250,6 +245,8 @@ button {
 #footer ul li:last-child {
   border-right: none;
 }
+/* 카피라이트
+======================================== */
 address {
   margin-top: 10px;
   font-size: 13px;
