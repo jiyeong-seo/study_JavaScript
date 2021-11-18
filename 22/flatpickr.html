@@ -21,10 +21,13 @@
     </div>
     <hr />
 
-    <p>첫번째 방법</p>
+    <h2>날짜 Datepicker - flatpickr</h2>
+    <span>날짜 표현을 예쁘게 해주는 JavaScript 라이브러리.</span>
+
+    <h5>첫번째 방법</h5>
     <input id="date" placeholder="날짜를 선택해주세요1" />
 
-    <p>두번째 방법</p>
+    <h5>두번째 방법</h5>
     <input id="calender" placeholder="날짜를 선택해주세요2" />
 
     <script>
@@ -44,7 +47,7 @@
       // 두번째 방법 - flatpickr("선택자");
       flatpickr("#calender");
 
-      /* 제어 -> flatpickr("선택자",{ })*/
+      /* 제어 -> flatpickr("요소",{ })*/
       //선택 날짜 연결
       flatpickr("#calender", {
         mode: "multiple", // 다중 선택
