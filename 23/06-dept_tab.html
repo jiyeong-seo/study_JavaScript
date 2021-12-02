@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      /* style the tab */
+      .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+      }
+      /* style the buttons inside the tab */
+      .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+      }
+      /* change background color of buttons on hover */
+      .tab button:hover {
+        background-color: #ddd;
+      }
+      /* create an active/current tablink class */
+      .tab button.active {
+        background-color: #ccc;
+      }
+      /* Style the tab content */
+      .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+      }
+      .tabcontent.active {
+        display: block;
+      }
+      dt {
+        font-weight: bold;
+        margin: 10px 0px;
+        font-size: 20px;
+      }
+      dt:before {
+        content: "◎";
+        padding-right: 5px;
+      }
+      dd {
+        font-weight: normal;
+        margin-bottom: 30px;
+        border-left: 5px solid #d5d5d5 solid;
+        padding-left: 15px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tab">
+      <button class="tablinks active" data-deptno="101">컴퓨터공학과</button>
+      <button class="tablinks" data-deptno="102">멀티미디어학과</button>
+      <button class="tablinks" data-deptno="201">전자공학과</button>
+      <button class="tablinks" data-deptno="202">기계공학과</button>
+    </div>
+
+    <div class="tabcontent active">
+      <dl id="dept-item">
+        <dt>학과번호</dt>
+        <dd class="deptno"></dd>
+        <dt>학과명</dt>
+        <dd class="dname"></dd>
+        <dt>학과위치</dt>
+        <dd class="loc"></dd>
+      </dl>
+    </div>
+    <script>
+      function get_dept_item(deptno) {
+        /*--------------Ajax 처리 로직 시작 --------------*/
+        const xhr = new XMLHttpRequest();
+        const method = "GET";
+        //링크에 숨겨진 data-deptno값을 백엔드에 전송함
+        const url = "http://itpaper.co.kr/data/dept_item.php?deptno=" + deptno;
+
+        xhr.onreadystatechange = (e) => {
+          const { target } = e;
+
+          if (target.readyState == XMLHttpRequest.DONE) {
+            if (target.status == 200) {
+              const req = JSON.parse(target.response);
+              document.querySelector(".deptno").innerHTML = req.deptno;
+              document.querySelector(".dname").innerHTML = req.dname;
+              document.querySelector(".loc").innerHTML = req.loc;
+            } else {
+              const s = parseInt(target.status / 100);
+              let errMsg = null;
+
+              if (s == 4) {
+                errMsg =
+                  "[" +
+                  target.status +
+                  "]" +
+                  target.statusText +
+                  "-요청 주소가 잘못되었습니다.";
+              } else if (s == 5) {
+                errMsg =
+                  "[" +
+                  target.status +
+                  "]" +
+                  target.statusText +
+                  "-서버의 응답이 없습니다.";
+              } else {
+                errMsg =
+                  "[" +
+                  target.status +
+                  "]" +
+                  target.statusText +
+                  "-요청에 실패했습니다.";
+              }
+              alert(errMsg);
+            }
+          }
+        };
+        xhr.open(method, url);
+        xhr.send();
+        /*----------Ajax 처리 로직 끝-------------*/
+      }
+
+      document.querySelectorAll(".tablinks").forEach((v, i) => {
+        v.addEventListener("click", (e) => {
+          // 현재 클릭된 항목의 인덱스 번호
+          const currentIndex = i;
+
+          // // 클릭된 버튼에 적용된 'data-target'값을 취득
+          // const currentTarget = e.currentTarget.dataset.target;
+          
+
+          // 모든 버튼에 대한 active 클래스 해제
+          document.querySelectorAll(".tablinks").forEach((v1, i1) => {
+            if (currentIndex == i1) {
+              v1.classList.add("active");
+            } else {
+              v1.classList.remove("active");
+            }
+          });
+
+          // 클릭된 링크 자신
+          const current = e.currentTarget;
+          
+
+          // 링크에 숨겨진 data-deptno의 값을 가져옴
+          const deptno = current.dataset.deptno;
+          console.log(deptno);
+
+          // Ajax 기능 호출
+          get_dept_item(deptno);
+        });
+      });
+
+      (() => {
+        get_dept_item(101);
+      })();
+    </script>
+  </body>
+</html>

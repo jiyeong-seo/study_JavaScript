@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      dt {
+        font-weight: bold;
+        margin: 10px 0px;
+        font-size: 20px;
+      }
+      dt::before {
+        content: "◎";
+        padding-right: 5px;
+      }
+      dd {
+        font-weight: normal;
+        margin-bottom: 30px;
+        border-left: 5px solid #d5d5d5 solid;
+        padding-left: 15px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Dept Item</h1>
+    <dl id="dept-item">
+      <dt>학과번호</dt>
+      <dd class="deptno"></dd>
+      <dt>학과명</dt>
+      <dd class="dname"></dd>
+      <dt>학과위치</dt>
+      <dd class="loc"></dd>
+    </dl>
+
+    <script>
+      (() => {
+        const xhr = new XMLHttpRequest();
+        const method = "GET";
+        const url = "backend/dept_item.json";
+        //xhr 객체의 상태가 변화할 때 마다 호출되는 이벤트
+        //서버에서 응답이 도착하면 특정한 js함수를 호출할 수 있다
+        xhr.onreadystatechange = (e) => {
+          // 매개변수 e에 객체가 입력된다
+          //필요한 정보만 추출함
+          const { target } = e;
+
+          if (target.readyState == XMLHttpRequest.DONE) {
+            if (target.status == 200) {
+              const req = JSON.parse(target.response);
+              document.querySelector(".deptno").innerHTML = req.deptno;
+              document.querySelector(".dname").innerHTML = req.dname;
+              document.querySelector(".loc").innerHTML = req.loc;
+            } else {
+              const s = parseInt(target.status / 10);
+              let errMsg = null;
+
+              if (s == 4) {
+                errMsg =
+                  "[" +
+                  target.status +
+                  "]" +
+                  target.statusText +
+                  "-요청 주소가 잘못되었습니다.";
+              } else if (s == 5) {
+                errMsg =
+                  "[" +
+                  target.status +
+                  "]" +
+                  target.statusText +
+                  "-서버의 응답이 없습니다.";
+              } else {
+                errMsg =
+                  "[" +
+                  target.status +
+                  "]" +
+                  target.statusText +
+                  "-요청에 실패했습니다.";
+              }
+              alert(errMsg);
+            }
+          }
+        };
+        xhr.open(method, url);
+        xhr.send();
+      })();
+    </script>
+  </body>
+</html>
