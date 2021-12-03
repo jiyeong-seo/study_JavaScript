@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>영화진흥위원회 박스오피스 순위</h1>
+    <input type="date" id="targetDt" />
+
+    <table broder="1">
+      <thead>
+        <tr>
+          <th>순위</th>
+          <th>영화제목</th>
+          <th>관객수</th>
+          <th>개봉일</th>
+        </tr>
+      </thead>
+      <tbody id="list-body"></tbody>
+    </table>
+
+    <script>
+        const getMovieRank = (targetDt)=>{
+            const xhr = new XMLHttpRequest();
+            const method = "GET";
+            const url = "http://www.kobis.or.kr/kobisopenapi"
+
+            xhr.onreadystatechange = (e) => {
+                const {target} = e;
+
+                
+            }
+        }
+    </script>
+  </body>
+</html>

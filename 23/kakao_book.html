@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>카카오 책 검색</h1>
+    <form id="searchForm">
+      <fieldset>
+        <input type="search" id="query" placeholder="Search..." />
+        <button type="submit">검색</button>
+
+        <a href="#" id="sort-button-asc">낮은 가격순 정렬</a>
+        <a href="#" id="sort-button-desc">높은 가격순 정렬</a>
+      </fieldset>
+    </form>
+    <ul id="list"></ul>
+
+    <script>
+      // 데이터를 저장하기 위한 전역변수
+      var data = null;
+      var query = null;
+
+      // 검색 버튼에 대한 이벤트
+      document.querySelector("#searchForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const queryField = document.querySelector("#query");
+        query = queryField.value.trim(); 
+      });
+    </script>
+  </body>
+</html>
