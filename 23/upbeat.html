@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      li {
+        width: auto;
+        display: inline-block;
+        padding: 5px 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+<!-- 검색 -->
+<form id="upbitForm">
+  <fieldset>
+    <input type="search" name="" id="" placeholder="코인 검색">
+    <button type="submit">검색</button>
+  </fieldset>
+</form>
+
+    <h1>업비트 OPEN API</h1>
+    <h2>업비트에서 제공중인 시장 정보</h2>
+    <ul id="upbitMarket"></ul>
+    <hr />
+    <h2>거래 대상 암호화폐 한글명</h2>
+    <ul id="upbitKoreanName"></ul>
+    <hr />
+    <h2>거래 대상 암호화폐 영문명</h2>
+    <ul id="upbitEnglishName"></ul>
+
+    <script>
+      // 데이터를 저장하기 위한 전역변수
+      var data = null;
+
+      // 업비트 API로 데이터를 요청,응답
+      function upbitApi() {
+        const xhr = new XMLHttpRequest();
+        const method = "GET";
+        const url = "https://api.upbit.com/v1/market/all?isDetails=false";
+
+        xhr.onreadystatechange = (e) => {
+          const { target } = e;
+
+          if (target.readyState == XMLHttpRequest.DONE) {
+            if (target.status == 200) {
+              const req = JSON.parse(target.response);
+              // 응답받아 parse로 파싱해서 JSON형태로 리턴시킨 값 대입
+              // 응답받은 데이터를 전역변수에 저장
+              data = req;
+              upbitShow();
+            } else {
+              const s = parseInt(target.status / 100);
+              let errMsg = null;
+              if (s == 4) {
+                errMsg = `[${target.status}] ${target.statusText}요청주소가 잘못되었습니다.`;
+              } else if (s == 5) {
+                errMsg = `[${target.status}] ${target.statusText}서버의 응답이 없습니다.`;
+              } else {
+                errMsg = `[${target.status}] ${target.statusText}요청에 실패했습니다. `;
+              }
+              alert(errMsg);
+            }
+          }
+        };
+        xhr.open(method, url);
+        xhr.send();
+      }
+
+      // 브라우저에 데이터 출력 함수
+      function upbitShow() {
+        const upbitMarket = document.querySelector("#upbitMarket");
+
+        data.forEach((e, i) => {
+          // 업비트에서 제공중인 시장 정보
+          const marketLi = document.createElement("li");
+          marketLi.innerHTML = data[i].market;
+          upbitMarket.appendChild(marketLi);
+          // 거래 대상 암호화폐 한글명
+          const koreanNameLi = document.createElement("li");
+          koreanNameLi.innerHTML = data[i].korean_name;
+          upbitKoreanName.appendChild(koreanNameLi);
+          // 거래 대상 암호화폐 영문명
+          const englishNameLi = document.createElement("li");
+          englishNameLi.innerHTML = data[i].english_name;
+          upbitEnglishName.appendChild(englishNameLi);
+        });
+      }
+
+      upbitApi();
+    </script>
+  </body>
+</html>
