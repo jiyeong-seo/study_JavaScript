@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="app.js"></script>
+    <title>Document</title>
+    <style>
+      li {
+        width: auto;
+        display: inline-block;
+        padding: 5px 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 검색 -->
+    <form id="upbitForm">
+      <fieldset>
+        <input type="search" name="" id="" placeholder="코인 검색" />
+        <button type="submit">검색</button>
+      </fieldset>
+    </form>
+
+    <h1>업비트 OPEN API</h1>
+    <h2>업비트에서 제공중인 시장 정보</h2>
+    <ul id="upbitMarket"></ul>
+    <hr />
+    <h2>거래 대상 암호화폐 한글명</h2>
+    <ul id="upbitKoreanName"></ul>
+    <hr />
+    <h2>거래 대상 암호화폐 영문명</h2>
+    <ul id="upbitEnglishName"></ul>
+  </body>
+</html>

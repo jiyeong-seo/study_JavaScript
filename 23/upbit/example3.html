@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      li {
+        width: auto;
+        display: inline-block;
+        padding: 5px 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 검색 -->
+    <form id="upbitForm">
+      <fieldset>
+        <input type="search" id="coinInput" placeholder="코인 검색" />
+        <button type="button" id="search_button">검색</button>
+      </fieldset>
+    </form>
+    <!-- 검색 결과 -->
+    <h1>검색 결과</h1>
+    <h2>시가</h2>
+    <p id="opening_price"></p>
+    <!-- 마켓 코드 조회 -->
+    <h1>마켓 코드 조회</h1>
+    <h2>업비트에서 제공중인 시장 정보</h2>
+    <ul id="marketCodeMarket"></ul>
+    <hr />
+    <h2>거래 대상 암호화폐 한글명</h2>
+    <ul id="marketCodeKoreanName"></ul>
+    <hr />
+    <h2>거래 대상 암호화폐 영문명</h2>
+    <ul id="marketCodeEnglishName"></ul>
+    <hr />
+
+
+    <script>
+      // 선언 후 호출!
+      // 브라우저에 마켓 코드 조회 데이터 출력 함수
+      function createListItem(data) {
+        const upbitMarket = document.querySelector("#upbitMarket");
+        // forEach에 직관적인 매개변수명을 설정한다
+        // const {market , korean_name , english_name} = forEach로 현재 순환하는 원소인 객체를 비구조할당 한 것 코드 31과 동일하다
+        // 객체는 순서가 없으니까 순서는 상관 없이 할당할 수 있다
+        data.forEach(({ market, korean_name, english_name }) => {
+          // 업비트에서 제공중인 시장 정보
+          const marketLi = document.createElement("li");
+          marketLi.addEventListener("click", () =>{
+            currnetData(market);
+          });
+          marketLi.innerHTML = market;
+          marketCodeMarket.appendChild(marketLi);
+          // 거래 대상 암호화폐 한글명
+          const koreanNameLi = document.createElement("li");
+          koreanNameLi.innerHTML = korean_name;
+          marketCodeKoreanName.appendChild(koreanNameLi);
+          // 거래 대상 암호화폐 영문명
+          const englishNameLi = document.createElement("li");
+          englishNameLi.innerHTML = english_name;
+          marketCodeEnglishName.appendChild(englishNameLi);
+        });
+      }
+
+      // 마켓 코드 조회
+      // 업비트 API로 데이터를 요청,응답
+      function marketCode() {
+        const xhr = new XMLHttpRequest();
+        const method = "GET";
+        const url = "https://api.upbit.com/v1/market/all?isDetails=false";
+
+        xhr.onreadystatechange = (e) => {
+          const { target } = e;
+
+          if (target.readyState === XMLHttpRequest.DONE) {
+            if (target.status === 200) {
+              // 응답받아 parse로 파싱해서 JSON형태로 리턴
+              const res = JSON.parse(target.response);
+              createListItem(res);
+            } else {
+              const status = parseInt(target.status / 100);
+              let error = null;
+              if (status === 4) {
+                error = `[${target.status}] ${target.statusText}요청주소가 잘못되었습니다.`;
+              } else if (status === 5) {
+                error = `[${target.status}] ${target.statusText}서버의 응답이 없습니다.`;
+              } else {
+                error = `[${target.status}] ${target.statusText}요청에 실패했습니다. `;
+              }
+              alert(error);
+            }
+          }
+        };
+        xhr.open(method, url);
+        xhr.send();
+      }
+
+
+        // 브라우저에 마켓 코드 조회 데이터 출력 함수
+        function createDataListItem(data) {
+        const upbitMarket = document.querySelector("#upbitMarket");
+
+        // forEach에 직관적인 매개변수명을 설정한다
+        // const {market , korean_name , english_name} = forEach로 현재 순환하는 원소인 객체를 비구조할당 한 것 코드 31과 동일하다
+        // 객체는 순서가 없으니까 순서는 상관 없이 할당할 수 있다
+        data.forEach(({ market, trade_date, trade_time, trade_date_kst }) => {
+          // 종목 구분 코드
+          const marketLi = document.createElement("li");
+          marketLi.innerHTML = market;
+          currnetDataMarket.appendChild(marketLi);
+          // 최근 거래 일자(UTC)
+          const tradeDateLi = document.createElement("li");
+          tradeDateLi.innerHTML = trade_date;
+          currnetDataTradeDate.appendChild(tradeDateLi);
+          // 최근 거래 시각(UTC)
+          const tradeTimeLi = document.createElement("li");
+          tradeTimeLi.innerHTML = trade_time;
+          currnetDataTradeTime.appendChild(tradeTimeLi);
+          // 최근 거래 일자(KST)
+          const tradeDateKstLi = document.createElement("li");
+          tradeDateKstLi.innerHTML = trade_date_kst;
+          currnetDataTradeDateKst.appendChild(tradeDateKstLi);
+        });
+      }
+      
+      // 현재가 정보 API로 데이터를 요청,응답
+      // 업비트 API로 데이터를 요청,응답
+      function currentData(param) {
+        const xhr = new XMLHttpRequest();
+        const method = "GET";
+        const url = `https://api.upbit.com/v1/ticker?markets=${param}`;
+
+        xhr.onreadystatechange = (e) => {
+          const { target } = e;
+// =============================================================================
+          if (target.readyState === XMLHttpRequest.DONE) {
+            if (target.status === 200) {
+              // 응답받아 JSON형태를 parse로 파싱해서 객체로 리턴 -> JS에서 사용할 수 있게끔 바꿔준다.
+              //JSON.stringify(obj)
+              // JSON.parse(target.response) 는 배열인데 그 중에 첫번째 인덱스 값을 
+              // [res] 에 넣는 것 -> 배열의 첫번째 인덱스의 객체를 비구조화 할당 함으로서 res로 사용할 수 있다
+              const [res] = JSON.parse(target.response);
+              console.log(res);
+              // querySelectorAll -> 유사 배열 객체? -> 알아보기
+              // 비구조화 할당 객체일때는 { }(중괄호) , 배열이면 [ ](대괄호)
+              // const [first(1들어감),second,] = [1,2,3]; -> 인덱스 순서에 맞게 들어간다
+              const [openingPrice] = document.querySelectorAll('#opening_price');
+              openingPrice.textContent = res.opening_price;
+            } else {
+              const status = parseInt(target.status / 100);
+              let error = null;
+              if (status === 4) {
+                error = `[${target.status}] ${target.statusText}요청주소가 잘못되었습니다.`;
+              } else if (status === 5) {
+                error = `[${target.status}] ${target.statusText}서버의 응답이 없습니다.`;
+              } else {
+                error = `[${target.status}] ${target.statusText}요청에 실패했습니다. `;
+              }
+              alert(error);
+            }
+          }
+        };
+        xhr.open(method, url);
+        xhr.send();
+      }
+      //핸들러 함수 : 어떤 이벤트가 동작할 때 콜백으로 들어가는 함수 이벤트 함수 두번째 인자로 들어가는 콜백함수 같은거
+      function handleSubmit(){
+        const input = document.getElementById("coinInput");
+        currentData(input.value);
+      }
+      const searchButton = document.getElementById("search_button");
+      // 콜백함수를 넣어주면 자동으로 호출해준다 -> 그래서 실행해서 넣으면 안된다 -> 사용법(API)이다 -> 외워야 함!
+      searchButton.addEventListener("click", handleSubmit);
+      marketCode();
+    </script>
+  </body>
+</html>

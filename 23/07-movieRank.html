@@ -23,17 +23,92 @@
     </table>
 
     <script>
-        const getMovieRank = (targetDt)=>{
-            const xhr = new XMLHttpRequest();
-            const method = "GET";
-            const url = "http://www.kobis.or.kr/kobisopenapi"
+      const getMovieRank = (targetDt) => {
+        const xhr = new XMLHttpRequest();
+        const method = "GET";
+        const url = `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=fedc8f6bb7325d8aa8e4e29f786db11c&targetDt=${targetDt}`;
 
-            xhr.onreadystatechange = (e) => {
-                const {target} = e;
+        xhr.onreadystatechange = (e) => {
+          const { target } = e;
+          console.log(`타겟${target}`);
+          if (target.readyState === XMLHttpRequest.DONE) {
+            if (target.status === 200) {
+              const res = JSON.parse(target.response);
+              console.log(`res : ${res}`);
+              console.log(res);
+              const listBody = document.querySelector("#list-body");
+              Array.from(listBody.getElementsByTagName("tr")).forEach(
+                (v, i) => {
+                  listBody.removeChild(v);
+                }
+              );
 
-                
+              res.boxOfficeResult.dailyBoxOfficeList.forEach((v, i) => {
+                console.log(`박스오피스 리졸트 ${i}`);
+                const tr = document.createElement("tr");
+
+                const td1 = document.createElement("td");
+                td1.innerHTML = v.rank;
+
+                const td2 = document.createElement("td");
+                td2.innerHTML = v.movieNm;
+
+                const td3 = document.createElement("td");
+                td3.innerHTML = v.audiCnt;
+
+                const td4 = document.createElement("td");
+                td4.innerHTML = v.openDt;
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+
+                listBody.appendChild(tr);
+              });
+            } else {
+              const status = parseInt(target.status / 100);
+              let error = null;
+              if (status === 4) {
+                error = `[${target.status}] ${target.statusText}요청주소가 잘못되었습니다.`;
+              } else if (status === 5) {
+                error = `[${target.status}] ${target.statusText}서버의 응답이 없습니다.`;
+              } else {
+                error = `[${target.status}] ${target.statusText}요청에 실패했습니다. `;
+              }
+              alert(error);
             }
-        }
+          }
+        };
+        xhr.open(method, url);
+        xhr.send();
+      };
+
+      document.querySelector("#targetDt").addEventListener("click", (e) => {
+        const date = e.currentTarget.value.replaceAll("-", "");
+        console.log(date);
+        getMovieRank(date);
+      });
+
+      /* 페이지 열림과 동시에 실행됨 */
+      const date = new Date();
+      // 하루전을 계산
+      let b = date.getDate() - 1;
+      date.setDate(b);
+
+      let yy = date.getFullYear();
+      let mm = date.getMonth() + 1;
+      let dd = date.getDate();
+
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
+
+      let sendDate = "" + yy + mm + dd;
+      getMovieRank(sendDate);
     </script>
   </body>
 </html>
