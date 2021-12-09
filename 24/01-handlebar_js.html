@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      dt {
+        font-weight: bold;
+        margin: 10px 0px;
+        font-size: 20px;
+      }
+      dt::before {
+        content: "◎";
+        padding-right: 5px;
+      }
+      dd {
+        font-weight: normal;
+        margin-bottom: 30px;
+        border-left: 5px solid #d5d5d5 solid;
+        padding-left: 15px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+      <h1>Simple handlebar</h1>
+      <div id="result"></div>
+      <script id="tmpl" type="text/x-handlebars-template">
+          <dl id="dept-item">
+              <dt>학과번호</dt>
+              <dd>{{deptno}}</dd>
+              <dt>학과명</dt>
+              <dd>{{dname}}</dd>
+              <dt>학과위치</dt>
+              <dd>{{loc}}</dd>
+          </dl>
+      </script>
+
+      <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+      <script>
+          const json = {
+              deptno: 101,
+              dname: '컴퓨터공학과',
+              loc:'1호관',
+          };
+
+          // 내용을 출력할 HTML 템플릿 가져오기
+          const html = document.querySelector("#tmpl").innerHTML;
+          // HTML태그를 분석해서 실행 함수를 리턴함
+          const template = Handlebars.compile(html);
+          // 실행함수에 데이터를 전달해서 결과물 조립
+          const result = template(json);
+          console.log(result);
+
+          // 조립 결과를 원하는 곳에 출력
+          document.querySelector('#result').insertAdjacentHTML("beforeend",result);
+      </script>
+  </body>
+</html>
