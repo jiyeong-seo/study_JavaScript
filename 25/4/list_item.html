@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  </head>
+
+  <body>
+    <div id="result"></div>
+
+    <script id="tmpl" type="text/x-handlebars-template">
+      {{#each item}}
+        <dl id="dept-item">
+          <dt>
+            학과번호
+          </dt>
+          <dd>
+            {{deptno}}
+          </dd>
+          <dt>
+            학과명
+          </dt>
+          <dd>
+            {{dname}}
+          </dd>
+          <dt>
+            학과위치
+          </dt>
+          <dd>
+            {{loc}}
+          </dd>
+        </dl>
+      {{/each}}
+    </script>
+    <script>
+      // 1. Json 데이터 가져오기
+      function fetchData(url, method) {
+        // promise 객체 리턴
+        return new Promise((resolve, reject) => {
+          // 비동기
+          // 1. XMLHttpRequest 객체(인스턴스) 생성 -> 생성자 함수로 붕어빵 찍은 인스턴스!
+          const xhr = new XMLHttpRequest();
+          // 2. 초기화
+          xhr.open(method , url);
+          // 응답받은 후 처리
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              // 응답 성공시 promise 상자에 resolve 해준다(넣어준다)
+              resolve(JSON.parse(xhr.response));
+            } else {
+              reject(xhr.status);
+            }
+          };
+          // 에러가 발생했을 때
+          xhr.onerror = () => {
+            reject(xhr.status);
+          };
+
+          // 3. 요청
+          xhr.send();
+        });
+      }
+
+      // 2. 가져온 데이터로 HTML태그에 주입하기
+      function injectDataToHTML() {
+        fetchData("dept_list.json", "GET")
+          // 프로미스 상자 안에 들어있는 값을 then의 콜백의 인자로 받는다
+          .then((response) => {
+            const html = document.querySelector("#tmpl").innerHTML;
+
+            const template = Handlebars.compile(html);
+            const result = template(response);
+
+            document
+              .querySelector("#result")
+              .insertAdjacentHTML("beforeend", result);
+          })
+          // 프로미스 상자 안에 들어있는 error값을 catch의 콜백의 인자로 받는다
+          .catch((error) => {
+            console.log(error);
+          })
+      }
+
+      injectDataToHTML();
+    </script>
+  </body>
+</html>

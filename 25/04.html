@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Dept List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>학과번호</th>
+                <th>학과명</th>
+                <th>학과위치</th>
+            </tr>
+            <tbody id="list-body"></tbody>
+        </thead>
+    </table>
+
+    <script>
+        function ajaxPromiseHelper(url, method = "GET", headers = null) {
+  // promise생성자가 호출되면서 resolve와 reject가 호출된다
+  // resolve를 호출시 then이 호출된다
+  // reject를 호출시 catch가 호출된다
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method || "GET", url);
+
+    if (headers != undefined) {
+      for (let key in headers) {
+        xhr.setRequestHeader(key, headers[key]);
+      }
+    }
+
+    xhr.onreadystatechange = (e) => {
+      const ajax = e.target;
+
+      if (ajax.readyState === XMLHttpRequest.DONE) {
+        if (ajax.status === 200) {
+          const json = JSON.parse(ajax.responseText);
+          // promise기법은 콜백함수를 줄이기 위해 등장한 기법
+          // 성공했을 경우 콜백 호출이 아닌 resolve를 호출
+          // ==> 바깥 실행부분의 .then(function(){...}) 영역의 콜백함수를 대신 호출해줌
+          resolve(json);
+        } else {
+          const status = parseInt(ajax.status / 100);
+          let msg = null;
+          if (s === 4) {
+            msg = "요청 주소가 잘못되었습니다.";
+          } else if (s === 5) {
+            msg = "서버의 응답이 없습니다.";
+          } else {
+            msg = "요청에 실패했습니다.";
+          }
+          // 실패했을 경우 콜백 호출이 아닌 reject를 호출함.
+          // 바깥 실행 부분의 .catch(function(e){...}) 영역의 콜백함수를 대신 호출해줌
+          reject({status: ajax.status, text: ajax.statusText, msg: msg});
+        }
+      } // end if
+    };
+    xhr.send();
+  });
+}
+
+    </script>
+
+    <script>
+         (() => {
+            ajaxPromiseHelper("dept_list.json").then((json) => {
+              console.log(json);
+  const listBody = document.querySelector("#list-body");
+
+          json.item.forEach((v,i) => {
+              const tr = document.createElement("tr");
+              const td1 = document.createElement("td");
+              td1.innerHTML = v.deptno;
+              const td2 = document.createElement("td");
+              td2.innerHTML = v.dname;
+              const td3 = document.createElement("td");
+              td3.innerHTML = v.loc;
+
+              tr.appendChild(td1);
+              tr.appendChild(td2);
+              tr.appendChild(td3);
+
+              listBody.appendChild(tr);
+
+            })
+                
+       })();
+    </script>
+</body>
+</html>
+
+.then((json) => {
+  // console.log(json);
+  // const listBody = document.querySelector("#list-body");
+
+  //         json.item.forEach((v,i) => {
+  //             const tr = document.createElement("tr");
+  //             const td1 = document.createElement("td");
+  //             td1.innerHTML = v.deptno;
+  //             const td2 = document.createElement("td");
+  //             td2.innerHTML = v.dname;
+  //             const td3 = document.createElement("td");
+  //             td3.innerHTML = v.loc;
+
+  //             tr.appendChild(td1);
+  //             tr.appendChild(td2);
+  //             tr.appendChild(td3);
+
+  //             listBody.appendChild(tr);
+
+})
+}).catch((e) => {
+  console.log(e);
+  alert(e.msg);
+});

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Simple Json</h1>
+    <a href="#" id="btn">load hello.json</a>
+    <div id="console"></div>
+
+    <script src="ajaxPromiseHelper.js"></script>
+
+    <script>
+      document.querySelector("#btn").addEventListener("click", (e) => {
+        e.preventDefault();
+
+        ajaxPromiseHelper("../24/backend/hello.json")
+          .then((json) => {
+            console.log(json);
+            document.getElementById("console").innerHTML = json.msg;
+          })
+          .catch((e) => {
+            console.log(e);
+            alert(e.msg);
+          });
+      });
+    </script>
+  </body>
+</html>
