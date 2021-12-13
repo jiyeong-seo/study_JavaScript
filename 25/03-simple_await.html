@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Sinple Json by Async-Await</h1>
+    <a href="#" id="btn">load hello.json</a>
+    <div id="console"></div>
+    <script src='ajaxPromiseHelper.js'></script>
+    <script>
+      document.querySelector("#btn").addEventListener("click", (e) => {
+        e.preventDefault();
+        // 함수를 매번 정의하지 말고 즉시 실행 함수로 정의한다
+        (async () => {
+          try {
+            const json = await ajaxPromiseHelper("../23/backend/hello.json");
+            console.log(json);
+            document.getElementById("console").innerHTML = json.msg;
+          } catch (e) {
+            console.log(e);
+            alert(e.msg);
+          }
+        })();
+      });
+    </script>
+  </body>
+</html>
