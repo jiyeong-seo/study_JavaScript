@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <div id="loading"></div>
+    <h1>Simple Axios</h1>
+    <a href="#" id="btn">load json</a>
+    <div id="console"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      document.querySelector("#btn").addEventListener("click", (e) => {
+        e.preventDefault();
+
+        // HTTP의 4대 접속 방식 GET,POST,PUT,DELETE가 각각 함수로 존재.
+        axios
+          .get("backend/dept_item.json")
+          // .then((response) => {
+          .then(({ data }) => {
+            // console.log(response);
+            // 이 값이 백엔드에서 읽어온 내용
+            console.log(JSON.stringify(data));
+            document
+              .querySelector("#console")
+              .insertAdjacentHTML("beforeend", JSON.stringify(data));
+          })
+          .catch((error) => {
+            console.log(error);
+            console.log(error.response.status);
+            console.log(error.response.statusText);
+            console.log(error.response.data);
+          })
+          .finally(() => {
+            // 성공, 실패 여부에 상관 없이 마지막에 실행되는 함수
+            console.log("로딩 완료...");
+          });
+      });
+    </script>
+  </body>
 </html>

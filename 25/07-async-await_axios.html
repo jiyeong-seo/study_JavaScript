@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="loading"></div>
+    <h1>Async Await</h1>
+    <a href="#" id="btn">load json</a>
+    <div id="console"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      document.querySelector("#btn").addEventListener("click", (e) => {
+        e.preventDefault();
+// 엑시오스는 비동기 요청을 하기 위한 라이브러리 
+// async는 비동기 처리를 하기 위한 방법중에 하나 (흐름을 제어하기 위해서)
+        (async () => {
+          let json = null;
+          try {
+            const response = await axios.get("backend/dept_item.json");
+            json = response.data;
+            console.log(response);
+            console.log(json);
+            console.log(JSON.stringify(json));
+          } catch (e) {
+            console.error(e);
+            console.error(e.response.status);
+            console.error(e.response.data);
+          }
+          document
+            .querySelector("#console")
+            .insertAdjacentHTML("beforeend", JSON.stringify(json));
+        })();
+      });
+    </script>
+  </body>
+</html>
