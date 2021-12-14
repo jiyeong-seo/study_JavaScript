@@ -11,9 +11,11 @@ function upbitShow(data) {
     marketLi.innerHTML = market;
     upbitMarket.appendChild(marketLi);
     // 거래 대상 암호화폐 한글명
+
     const koreanNameLi = document.createElement("li");
     koreanNameLi.innerHTML = korean_name;
     upbitKoreanName.appendChild(koreanNameLi);
+    
     // 거래 대상 암호화폐 영문명
     const englishNameLi = document.createElement("li");
     englishNameLi.innerHTML = english_name;
@@ -35,7 +37,6 @@ function upbitApi() {
         const res = JSON.parse(target.response);
         // 응답받아 parse로 파싱해서 JSON형태로 리턴시킨 값 대입 -> data
         // 응답받은 데이터를 전역변수에 저장
-        
       } else {
         const status = parseInt(target.status / 100);
         let error = null;
